@@ -5,6 +5,6 @@ let controller = require('./setting.controller');
 
 let router = express.Router();
 // 登录
-router.post('/saveUserInfo', controller.setUserInfo);
+router.post('/saveUserInfo', controller.saveUserInfo);
 
 module.exports = router;

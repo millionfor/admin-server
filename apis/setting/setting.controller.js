@@ -5,7 +5,7 @@ let Setting = mongoose.model('Setting');
 let codes = require('../codes')
 
 // 更新admin用户信息
-exports.setUserInfo = function(req, res, next) {
+exports.saveUserInfo = function(req, res, next) {
   let setParam = {
     name: req.body.name,
     gender: req.body.gender,
@@ -22,7 +22,7 @@ exports.setUserInfo = function(req, res, next) {
     if (err) {
       res.send({
         code: 901,
-        msg: '用户名必填项',
+        msg: err,
         data:{}
       })
     }else{

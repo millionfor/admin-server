@@ -2,11 +2,10 @@
 
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
-let counter = 1;
-let CountedId = {type: Number, default: () => counter++};
+let Util = require('../util')
 
 let SettingSchema = new Schema({
-  id:CountedId,
+  id:Util.countedId(),
   name: {type: String, required: true},
   gender: {type: [Number], default:0},
   email: {type: String,required: true },
