@@ -6,6 +6,7 @@ let Util = {}
 /**
  * 自增长id
  * ！！！切记表里必须要有一条数据作为基础数据
+ * ！！！主键id(identitycounters)要大于集合最后一条记录的id数
  */
 Util.countedId = (o) => {
   let param = {

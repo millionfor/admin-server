@@ -4,6 +4,7 @@ let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let SettingSchema = new Schema({
+  id:{ type : Number, index: { unique: true } },
   name: {type: String, required: true},
   gender: {type: [Number], default:0},
   email: {type: String,required: true },

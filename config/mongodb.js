@@ -5,7 +5,7 @@ let autoIncrement = require('mongoose-auto-increment-fix');
 let options = {
   db_user: "root",
   db_pwd: "123456",
-  db_host: "192.168.60.159",
+  db_host: "192.168.199.121",
   db_port: 27017,
   db_name: "quanquansy"
 };
