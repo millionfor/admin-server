@@ -2,10 +2,8 @@
 
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
-let Util = require('../util')
 
 let SettingSchema = new Schema({
-  id:Util.countedId(),
   name: {type: String, required: true},
   gender: {type: [Number], default:0},
   email: {type: String,required: true },

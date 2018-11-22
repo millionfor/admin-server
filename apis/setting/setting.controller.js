@@ -2,7 +2,8 @@
 
 let mongoose = require('mongoose');
 let Setting = mongoose.model('Setting');
-let codes = require('../codes')
+let codes = require('../../module/codes/index')
+let Util = require('../../module/util')
 
 // 更新admin用户信息
 exports.saveUserInfo = function(req, res, next) {
@@ -16,7 +17,7 @@ exports.saveUserInfo = function(req, res, next) {
     address: req.body.address,
     poco: req.body.poco,
     wangyi: req.body.wangyi,
-    updateTime: Date.parse(new Date()),
+    updateTime: Util.Date(),
   }
   Setting.update({id:1}, {$set: setParam}, {multi: true, upsert: true}, function (err, result) {
     if (err) {

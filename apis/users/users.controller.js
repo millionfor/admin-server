@@ -3,7 +3,8 @@
 let mongoose = require('mongoose');
 let Users = mongoose.model('Users');
 let md5 = require('md5');
-let codes = require('../codes')
+let codes = require('../../module/codes/index')
+let Util = require('../../module/util')
 
 // 登录
 exports.login = function(req, res, next) {

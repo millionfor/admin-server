@@ -6,8 +6,8 @@ let fs = require('fs');
 let bodyParser = require('body-parser');
 let session = require('express-session');
 let cookieParser = require('cookie-parser');
-let mongoose = require('mongoose');
-const getEnv = require('env-parse').getEnv
+let mongodb = require('./config/mongodb');
+
 
 let app = express();
 let port = 3030;
@@ -25,25 +25,13 @@ app.use(session({
 
 app.use(express.static(publicDir));
 
-let db = mongoose.connect(getEnv('DATE_ADDR'));
 let modelsPath = path.join(__dirname, 'db');
-
-db.connection.on("error", function (error) {
-  console.log("数据库连接失败：" + error);
-});
-
-//如果连接成功会执行open回调
-db.connection.on("open", function () {
-  console.log("数据库连接成功");
-});
-
 
 fs.readdirSync(modelsPath).forEach(function (file) {
   if (/(.*)\.(js$|coffee$)/.test(file)) {
     require(modelsPath + '/' + file);
   }
 });
-
 
 // 跨域设置
 app.all('*', function(req, res, next) {
@@ -56,7 +44,6 @@ app.all('*', function(req, res, next) {
 })
 
 require('./routes')(app);
-
 
 module.exports = app;
 

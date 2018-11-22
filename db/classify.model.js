@@ -2,15 +2,36 @@
 
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
-let Util = require('../util')
+let Util = require('../module/util')
+let autoIncrement = require('mongoose-auto-increment-fix');
 
 let ClassifysSchema = new Schema({
-  classifys_id:Util.countedId(),
+  classifys_id:{ type : Number, index: { unique: true } },
   classifys_cn_name: {type: String, required: true},
   classifys_en_name: {type: String, required: true},
   classifys_desc: {type: String},
   updateTime:{type: Date},
 })
+
+
+Util.countedId({
+  schema:ClassifysSchema,
+  model: 'ClassifysSchema',
+  field: 'classifys_id',
+})
+
+
+/*ClassifysSchema.index({ name:1}, { unique: true });
+ClassifysSchema.index({ id:1 }, { unique: true });
+
+//下面用自增插件，实现id的自增功能
+ClassifysSchema.plugin(autoIncrement.plugin, {
+  model: 'ClassifysSchema',
+  field: 'classifys_id',
+  startAt: 10000,
+  incrementBy: 1
+});*/
+
 
 let Classifys = mongoose.model('Classifys',ClassifysSchema,'sy_classifys');
 
