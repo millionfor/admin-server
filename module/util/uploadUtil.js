@@ -20,16 +20,13 @@ UploadUtil.prototype.qiniuUpload = function ({filePaths,classifys}) {
     // key 为上传到七牛云后自定义图片的名称
     return new Promise((resolve, reject) => {
       let fileName = path.win32.basename(filePath);
-      this.client.uploadFile(filePath, {key: `${classifys}/${fileName}`}, function (err, result) {
-        if(err) {
-          reject(err);
-        }else {
-          resolve(result);
-        }
+      this.client.uploadFile(filePath, {key: `./${classifys}/${fileName}`}, (err, result)=> {
+        resolve(result)
       });
     });
   });
-  return Promise.all(qiniuPromise);
+
+  return Promise.all(qiniuPromise)
 }
 
 /**
@@ -51,7 +48,7 @@ UploadUtil.prototype.move = function ({sourceImg,targetImg}) {
 
 /**
  * 删除图片
- * @param deleteImg 删除的图片地址(带分类)
+ * @param deleteImg 删除的图片地址(必须带分类)
  */
 UploadUtil.prototype.delete = function ({deleteImg}) {
   return new Promise((resolve,reject) => {
@@ -67,6 +64,7 @@ UploadUtil.prototype.delete = function ({deleteImg}) {
 
 /**
  * 改变图片大小
+ * @param cropImg 图片地址(必须带分类)
  */
 UploadUtil.prototype.cutting = function (cropImg) {
   return this.client.imageView(

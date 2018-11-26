@@ -6,7 +6,7 @@ let Schema = mongoose.Schema;
 let SettingSchema = new Schema({
   id:{ type : Number, index: { unique: true } },
   name: {type: String, required: true},
-  gender: {type: [Number], default:0},
+  gender: {type: String, default:'1'},
   email: {type: String,required: true },
   qq: {type: String, },
   wechat: {type: String, },
@@ -14,6 +14,7 @@ let SettingSchema = new Schema({
   address: {type: String, },
   poco: {type: String, },
   wangyi: {type: String,},
+  createTime:{type: Date},
   updateTime:{type: Date},
 })
 

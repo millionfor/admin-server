@@ -9,6 +9,8 @@ let ClassifysSchema = new Schema({
   classifys_cn_name: {type: String, required: true},
   classifys_en_name: {type: String, required: true},
   classifys_desc: {type: String},
+  classifys_rank: {type: Number},
+  createTime:{type: Date},
   updateTime:{type: Date},
 })
 

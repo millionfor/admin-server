@@ -5,6 +5,6 @@ let controller = require('./photos.controller');
 let router = express.Router();
 
 // 增加
-router.post('/save', controller.save);
+router.post('/create', controller.create);
 
 module.exports = router;

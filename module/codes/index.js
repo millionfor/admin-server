@@ -15,10 +15,6 @@ let codes = {
     code:202,
     msg:'设置用户信息成功！'
   },
-  203:{
-    code:203,
-    msg:'创建分类成功！'
-  },
 }
 
 module.exports = codes

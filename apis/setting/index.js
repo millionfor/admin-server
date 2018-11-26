@@ -5,6 +5,8 @@ let controller = require('./setting.controller');
 
 let router = express.Router();
 // 登录
-router.post('/saveUserInfo', controller.saveUserInfo);
+router.post('/update', controller.update);
+// 根据Id查询指定数据
+router.get('/findById', controller.findById);
 
 module.exports = router;

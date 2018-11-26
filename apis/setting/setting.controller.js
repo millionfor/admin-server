@@ -2,11 +2,10 @@
 
 let mongoose = require('mongoose');
 let Setting = mongoose.model('Setting');
-let codes = require('../../module/codes/index')
 let Util = require('../../module/util')
 
 // 更新admin用户信息
-exports.saveUserInfo = function(req, res, next) {
+exports.update = function(req, res, next) {
   let setParam = {
     name: req.body.name,
     gender: req.body.gender,
@@ -27,34 +26,31 @@ exports.saveUserInfo = function(req, res, next) {
         data:{}
       })
     }else{
-      res.send(Object.assign(codes[202],{},{
+      res.send({
+        code:0,
+        msg:'设置用户信息成功！',
         data:{}
-      }))
+      })
     }
   });
 
-  /*Setting.create({
-    name: req.body.name,
-    gender: req.body.gender,
-    email: req.body.email,
-    qq: req.body.qq,
-    wechat: req.body.wechat,
-    weibo: req.body.weibo,
-    address: req.body.address,
-    poco: req.body.poco,
-    wangyi: req.body.wangyi,
-    updateTime: Date.parse(new Date()),
-  }, function(err, result) {
+}
+
+// 查询单条数据
+exports.findById = function (req, res, next) {
+  Setting.find({id: 1}).exec(function (err, result) {
     if (err) {
       res.send({
         code: 901,
-        msg: '用户名必填项',
+        msg: err,
         data:{}
       })
     }else{
-      res.send(Object.assign(codes[202],{},{
-        data:{}
-      }))
+      res.send({
+        code: 0,
+        msg: '成功',
+        data:result
+      })
     }
-  })*/
+  });
 }

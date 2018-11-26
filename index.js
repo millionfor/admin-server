@@ -13,8 +13,12 @@ let app = express();
 let port = 3030;
 let publicDir = path.dirname(require.main.filename) + '/';
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended : false}));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({
+  limit: '50mb',
+  extended: false,
+  parameterLimit: 1000000 // experiment with this parameter and tweak
+}));
 app.use(cookieParser());
 app.use(session({
   secret: 'just-relax',
@@ -22,6 +26,7 @@ app.use(session({
   saveUninitialized: false,
   cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 }
 }))
+
 
 app.use(express.static(publicDir));
 

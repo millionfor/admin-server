@@ -4,14 +4,34 @@ let mongoose = require('mongoose');
 let Photos = mongoose.model('Photos');
 let codes = require('../../module/codes')
 let Util = require('../../module/util')
+let UploadUtil = require('../../module/util/uploadUtil')
 
 // 添加分类
-exports.save = function(req, res, next) {
+exports.create = function(req, res, next) {
+  UploadUtil.qiniuUpload({
+    filePaths:req.body.filePaths,
+    classifys:req.body.photosClassifys
+  }).then(res =>
+    res.send({
+      code: 0,
+      msg: '图片上传成功(then)！',
+      data:{}
+    })
+  ).catch(e => {
+    res.send({
+      code: 0,
+      msg: '图片上传成功(catch)！',
+      data:{}
+    })
+  });
+}
+/*Photos.nextCount(function(err, count) {
 
-  Photos.nextCount(function(err, count) {
-    let setParam = {
+
+});*/
+/*let setParam = {
       photos_id:count,
-      photos_name: req.body.photoName,
+      photos_title: req.body.photosTitle,
       photos_desc: req.body.photoDesc,
       photos_classify:req.body.photoClassify,
       photos_path_name:req.body.photoPathName,
@@ -29,8 +49,4 @@ exports.save = function(req, res, next) {
           data:{}
         }))
       }
-    })
-
-
-  });
-}
+    })*/
