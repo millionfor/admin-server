@@ -4,14 +4,14 @@ let UploadUtil = require('./module/util/uploadUtil')
 let filePaths = ['./1.jpg','./2.jpg'];
 
 // 上传
-/*UploadUtil.qiniuUpload({
+UploadUtil.qiniuUpload({
   filePaths:filePaths,
   classifys:'aaaa'
 }).then(res =>
   console.log(res)
 ).catch(e => {
   console.log('失败')
-});*/
+});
 
 // 更改图片地址
 /*
