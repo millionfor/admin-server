@@ -1,24 +1,20 @@
 'use strict'
 
 let mongoose = require('mongoose');
-let Setting = mongoose.model('Setting');
+let Qn = mongoose.model('Qn');
 let Util = require('../../module/util')
+var get_ip = require('ipware')().get_ip;
 
 // 更新admin用户信息
 exports.update = function(req, res, next) {
   let setParam = {
-    name: req.body.name,
-    gender: req.body.gender,
-    email: req.body.email,
-    qq: req.body.qq,
-    wechat: req.body.wechat,
-    weibo: req.body.weibo,
-    address: req.body.address,
-    poco: req.body.poco,
-    wangyi: req.body.wangyi,
+    access_key: req.body.accessKey,
+    secret_key: req.body.secretKey,
+    bucket: req.body.bucket,
+    origin: req.body.origin,
     updateTime: Util.Date(),
   }
-  Setting.update({id:1}, {$set: setParam}, {multi: true, upsert: true}, function (err, result) {
+  Qn.update({id:1}, {$set: setParam}, {multi: true, upsert: true}, function (err, result) {
     if (err) {
       res.send({
         code: 901,
@@ -28,7 +24,7 @@ exports.update = function(req, res, next) {
     }else{
       res.send({
         code:0,
-        msg:'设置用户信息成功！',
+        msg:'设置七牛云配置成功！',
         data:{}
       })
     }
@@ -38,7 +34,11 @@ exports.update = function(req, res, next) {
 
 // 查询单条数据
 exports.getConfig = function (req, res, next) {
-  Setting.find({id: 1}).exec(function (err, result) {
+
+  let ip_info = get_ip(req);
+  console.log(ip_info.clientIp)
+
+  Qn.find({id: 1}).exec(function (err, result) {
     if (err) {
       res.send({
         code: 901,

@@ -3,8 +3,6 @@
 let mongoose = require('mongoose');
 let Users = mongoose.model('Users');
 let md5 = require('md5');
-let codes = require('../../module/codes/index')
-let Util = require('../../module/util')
 
 // 登录
 exports.login = function(req, res, next) {
@@ -12,9 +10,11 @@ exports.login = function(req, res, next) {
   Users.find({'user_name': userName}).exec(function(err, doc) {
     // 用户不存在
 		if (doc === '') {
-			res.send(Object.assign(codes[201],{},{
-			  data:{}
-      }));
+			res.send({
+        data:{},
+        code:201,
+        msg:'用户不存在！'
+      });
 		}else {
 			if (doc[0].user_password === req.body.password) {
 				req.session.isLogin = 1;
@@ -27,9 +27,11 @@ exports.login = function(req, res, next) {
         });
 			}else{
 			  // 密码错误
-				res.send(Object.assign(codes[200],{},{
-          data:{}
-        }))
+				res.send({
+          data:{},
+          code:200,
+          msg:'密码错误！'
+        })
 			}
 		}
 	})

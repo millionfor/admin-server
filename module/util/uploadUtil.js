@@ -19,9 +19,9 @@ UploadUtil.prototype.qiniuUpload = function ({filePaths,classifys}) {
   let qiniuPromise = filePaths.map(filePath => {
     // key 为上传到七牛云后自定义图片的名称
     return new Promise((resolve, reject) => {
-      let fileName = path.win32.basename(filePath.imgPath);
-      let key = `${classifys}/${fileName}`
-      this.client.uploadFile(`./${filePath.imgPath}`, {key: key}, (err, result)=> {
+      let fileName = path.win32.basename(filePath.pathName);
+      let key = `${classifys}/${Date.parse(new Date())}/${fileName}`
+      this.client.uploadFile(`./${filePath.pathName}`, {key: key}, (err, result)=> {
         if (err) {
           reject(err)
         }else{
