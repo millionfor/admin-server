@@ -8,5 +8,7 @@ let router = express.Router();
 router.post('/login', controller.login);
 // 退出
 router.get('/logout', controller.logout);
+// 获取用户信息
+router.get('/userInfo', controller.userInfo);
 
 module.exports = router;

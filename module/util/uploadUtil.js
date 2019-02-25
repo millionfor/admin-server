@@ -1,12 +1,18 @@
 let qn = require('qn');
 let path = require('path');
+let mongoose = require('mongoose');
+let Qn = mongoose.model('Qn');
 
 let UploadUtil = function () {
-  this.client = qn.create({
-    accessKey: '9Mp8ZpqK1AexzkBoqCe0FfJHQjcd16z7iZnmP7AF',
-    secretKey: 'E5MYC1Vn3bC37_zPCpN-A7PBiRxFlyLxQ2-L1V1A',
-    bucket: 'qqsy',  // 在七牛云创建的空间名字
-    origin: 'http://img1.quanquansy.com',    // 使用测试域名
+  let self = this
+  Qn.find({id: 1}).exec(function (err, result) {
+    let data = result[0]
+    self.client = qn.create({
+      accessKey: data.access_key,
+      secretKey: data.secret_key,
+      bucket: data.bucket,  // 在七牛云创建的空间名字
+      origin: data.origin,    // 使用测试域名
+    });
   });
 }
 
@@ -20,14 +26,16 @@ UploadUtil.prototype.qiniuUpload = function ({filePaths,classifys}) {
     // key 为上传到七牛云后自定义图片的名称
     return new Promise((resolve, reject) => {
       let fileName = path.win32.basename(filePath.pathName);
-      let key = `${classifys}/${Date.parse(new Date())}/${fileName}`
-      this.client.uploadFile(`./${filePath.pathName}`, {key: key}, (err, result)=> {
+      let key = `${filePath.classifysEnName}/${Date.parse(new Date())}/${fileName}`
+      // 转成流
+      let blobSrc = filePath.blobSrc.replace(/^data:image\/\w+;base64,/, "");
+      let dataBuffer = new Buffer(blobSrc, 'base64');
+      this.client.upload(dataBuffer, {key: key}, (err, result)=> {
         if (err) {
           reject(err)
         }else{
           resolve(Object.assign(result,{},{
-            imageView:this.imageView(key),
-            sort:filePath.sort
+            imageView:this.imageView(key)
           }))
         }
       });
@@ -77,11 +85,10 @@ UploadUtil.prototype.imageView = function (cropImg) {
   return this.client.imageView(
     cropImg,
     {
-      mode: 1,
-      width: 200,
-      height: 200,
-      q: 50,
-      format: 'png'
+      mode: 2,
+      width: 750,
+      q: 100,
+      format: 'png',
     }
   );
 }

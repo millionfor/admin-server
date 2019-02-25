@@ -6,27 +6,33 @@ let fs = require('fs');
 let bodyParser = require('body-parser');
 let session = require('express-session');
 let cookieParser = require('cookie-parser');
-let mongodb = require('./config/mongodb');
-
+require('./config/mongodb');
+let mongoStore = require('connect-mongo')(session);
+let dbURL = require('./config/config')
 
 let app = express();
-let port = 3030;
 let publicDir = path.dirname(require.main.filename) + '/';
 
-app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.json({limit: '500mb'}));
 app.use(bodyParser.urlencoded({
-  limit: '50mb',
-  extended: false,
-  parameterLimit: 1000000 // experiment with this parameter and tweak
+  limit: '500mb',
+  extended: true,
+  parameterLimit: 999999999 // experiment with this parameter and tweak
 }));
+
+app.use(cookieParser());
 app.use(cookieParser());
 app.use(session({
-  secret: 'just-relax',
+  secret: "express",
+  key: "quanquan_sy",
+  cookie: {maxAge: 1000 * 180},//超时时间
   resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 }
-}))
-
+  saveUninitialized: true,
+  store: new mongoStore({
+    url: dbURL,
+    collection: 'sessions'
+  })
+}));
 
 app.use(express.static(publicDir));
 

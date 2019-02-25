@@ -7,44 +7,49 @@ let md5 = require('md5');
 // 登录
 exports.login = function(req, res, next) {
 	let userName = req.body.userName
-  Users.find({'user_name': userName}).exec(function(err, doc) {
-    // 用户不存在
-		if (doc === '') {
-			res.send({
+	let password = req.body.password
+  Users.find({'user_name': userName,user_password:password}).exec(function(err, doc) {
+    if (doc.length) {
+      req.session.user = userName
+      res.send({
+        data:doc[0],
+        code:0,
+        msg:'登录成功！'
+      })
+    }else{
+      res.send({
         data:{},
-        code:201,
-        msg:'用户不存在！'
-      });
-		}else {
-			if (doc[0].user_password === req.body.password) {
-				req.session.isLogin = 1;
-				req.session.username = userName;
-				res.cookie('isLogin', '1', { expires: new Date(Date.now() + 10000 * 60 * 60 * 24 * 7), httpOnly: true });
-				res.send({
-          code:0,
-          data:{},
-          msg:'登录成功'
-        });
-			}else{
-			  // 密码错误
-				res.send({
-          data:{},
-          code:200,
-          msg:'密码错误！'
-        })
-			}
-		}
+        code:300,
+        msg:'密码错误！'
+      })
+    }
 	})
 }
 
 // 登出
 exports.logout = function(req, res) {
-	req.session.isLogin = 0;
-	req.session.username = null;
-	res.cookie('isLogin','0' , {expires: 0});
+  req.session.user = null
 	res.send({
     code:0,
     data:{},
     msg:'登出成功'
   });
+}
+
+exports.userInfo = function (req, res) {
+  Users.find({'user_name': req.session.user}).exec(function(err, doc) {
+    if (doc.length) {
+      res.send({
+        data:doc[0],
+        code:0,
+        msg:'成功'
+      })
+    }else{
+      res.send({
+        data:{},
+        code:299,
+        msg:'失败'
+      })
+    }
+  })
 }

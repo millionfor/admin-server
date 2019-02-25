@@ -22,7 +22,6 @@ exports.create = function(req, res, next) {
         updateTime: Util.Date(),
       }
       Classifys.create(setParam, (err, result)=> {
-        console.log(err)
         if (err) {
           res.send({
             code: 901,
@@ -35,7 +34,6 @@ exports.create = function(req, res, next) {
             msg:'创建分类成功！',
             data:{}
           })
-
         }
       })
     });
@@ -58,7 +56,7 @@ exports.update = function(req, res, next) {
     classifys_rank:req.body.classifysRank,
     updateTime: Util.Date(),
   }
-  Classifys.update({classifys_id:req.body.classifysId}, {$set: setParam}, {multi: true, upsert: true}, function (err, result) {
+  Classifys.update({_id:req.body.classifysId}, {$set: setParam}, {multi: true, upsert: true}, function (err, result) {
     if (err) {
       res.send({
         code: 901,
@@ -77,7 +75,7 @@ exports.update = function(req, res, next) {
 
 // 删除
 exports.delete = function(req, res, next) {
-  Classifys.remove({classifys_id:req.body.classifysId}, function (err, result) {
+  Classifys.remove({_id:req.body.classifysId}, function (err, result) {
     if (err) {
       res.send({
         code: 902,
@@ -96,7 +94,7 @@ exports.delete = function(req, res, next) {
 
 // 查询单条数据
 exports.findById = function (req, res, next) {
-  Classifys.find({classifys_id: req.body.classifysId}).exec(function (err, result) {
+  Classifys.find({_id: req.body.classifysId}).exec(function (err, result) {
     if (err) {
       res.send({
         code: 901,
@@ -126,7 +124,7 @@ exports.list = function (req, res, next) {
       res.send({
         code: 0,
         msg: '成功',
-        data: _.sortBy(result,item => -item.updateTime)
+        data: _.sortBy(result,item => -(new Date(item.updateTime)).valueOf())
       })
     }
   });
@@ -134,5 +132,5 @@ exports.list = function (req, res, next) {
 
 // 关键词搜索
 exports.search = function (req, res, next) {
-  
+
 }
