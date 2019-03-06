@@ -50,7 +50,7 @@ exports.hotIndex = function(req, res, next) {
       msg: '成功',
       data: {
         hotBanner:_.slice(data, 0, 3),
-        hotList:_.slice(data, 4, 10),
+        hotList:_.slice(data, 3, 10),
         configData:getConfigData
       }
     })

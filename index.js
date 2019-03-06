@@ -25,7 +25,7 @@ app.use(cookieParser());
 app.use(session({
   secret: "express",
   key: "quanquan_sy",
-  cookie: {maxAge: 1000 * 180},//超时时间
+  cookie: {maxAge: 1000 * 60 * 60 * 12},//超时时间
   resave: false,
   saveUninitialized: true,
   store: new mongoStore({
