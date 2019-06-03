@@ -54,3 +54,12 @@ exports.getConfig = function (req, res, next) {
     }
   });
 }
+
+// 备份数据库
+exports.backupMongodb = function (req, res, next) {
+  res.send({
+    code: 0,
+    msg: 'backup',
+    data:{}
+  })
+}

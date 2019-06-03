@@ -21,5 +21,7 @@ router.get('/getConfig', function(req, res, next){
     res.send(e)
   })
 });
+// 备份mongodb数据库
+router.get('/backupMongodb',controller.backupMongodb);
 
 module.exports = router;
