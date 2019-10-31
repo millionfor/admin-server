@@ -26,7 +26,7 @@
     "ipware": "^1.0.0",
     "lodash": "^4.17.11",
     "md5": "^2.1.0",
-    "mongoose": "^4.5.8",
+    "mongoose": "^5.7.7",
     "mongoose-auto-increment-fix": "^5.0.2",
     "multer": "^1.2.0",
     "pm2": "^1.1.3",
