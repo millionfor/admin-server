@@ -21,7 +21,6 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(cookieParser());
-app.use(cookieParser());
 app.use(session({
   secret: "express",
   key: "quanquan_sy",
